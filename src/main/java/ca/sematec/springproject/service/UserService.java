@@ -22,8 +22,10 @@ public class UserService {
     public User getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
+            System.out.println("exists");
             return user.get();
         } else {
+            System.out.println("not exists");
             throw new EntityNotFoundException("User not found!");
 
         }

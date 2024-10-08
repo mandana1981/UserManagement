@@ -1,5 +1,6 @@
 package ca.sematec.springproject.controller;
 
+import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.UserService;
 import lombok.Data;
@@ -23,9 +24,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
-        return ResponseEntity.ok( user);
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+
+        UserDTO userDTO = userService.getUserById(id);
+
+        return ResponseEntity.ok( userDTO);
     }
 
     @PostMapping
@@ -33,17 +36,17 @@ public class UserController {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok( userService.updateUser(user));
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
+//        userService.deleteUser(id);
+//        return ResponseEntity.noContent().build();
+//    }
+//
+//
+//    @PutMapping
+//    public ResponseEntity<User> updateUser(@RequestBody User user) {
+//        return ResponseEntity.ok( userService.updateUser(user));
+//    }
 
 
 

@@ -3,14 +3,14 @@ package ca.sematec.springproject.controller;
 import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.UserService;
-import lombok.Data;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "USERS", description = "User Api")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -28,7 +28,7 @@ public class UserController {
 
         UserDTO userDTO = userService.getUserById(id);
 
-        return ResponseEntity.ok( userDTO);
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping
@@ -47,7 +47,6 @@ public class UserController {
 //    public ResponseEntity<User> updateUser(@RequestBody User user) {
 //        return ResponseEntity.ok( userService.updateUser(user));
 //    }
-
 
 
 }

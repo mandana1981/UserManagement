@@ -2,19 +2,20 @@ package ca.sematec.springproject.controller;
 
 import ca.sematec.springproject.entity.Permission;
 import ca.sematec.springproject.service.PermissionService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/permissions")
 public class PermissionController {
-    @Autowired
-    PermissionService permissionService;
+
+    private PermissionService permissionService;
+
+    public PermissionController(PermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Permission>> getAllPermissions() {

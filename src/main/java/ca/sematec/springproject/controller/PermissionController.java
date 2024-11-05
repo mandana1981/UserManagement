@@ -1,5 +1,7 @@
 package ca.sematec.springproject.controller;
 
+import ca.sematec.springproject.dto.PermissionDTO;
+import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.Permission;
 import ca.sematec.springproject.service.PermissionService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,29 +19,29 @@ public class PermissionController {
     PermissionService permissionService;
 
     @GetMapping
-    public ResponseEntity<List<Permission>> getAllPermissions() {
-        return ResponseEntity.ok(permissionService.getAllPermissions());
+    public ResponseEntity<List<PermissionDTO>> getAllPermissions() {
+        List<PermissionDTO> permissionDTOS=permissionService.getAllPermissions();
+        return ResponseEntity.ok(permissionDTOS);
     }
-
     @GetMapping("/{id}")
-    public ResponseEntity<Permission> getPermissionById(@PathVariable Long id) {
-        return ResponseEntity.ok(permissionService.getPermissionById(id));
+    public ResponseEntity<PermissionDTO> getPermissionById(@PathVariable Long id) {
+        PermissionDTO permissionDTO=permissionService.getPermissionById(id);
+        return ResponseEntity.ok(permissionDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Permission> addPermission(@RequestBody Permission permission) {
-        return ResponseEntity.ok(permissionService.addPermission(permission));
+    public ResponseEntity<PermissionDTO> addPermission(@RequestBody PermissionDTO permissionDTO) {
+        return ResponseEntity.ok(permissionService.addPermission(permissionDTO));
     }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Permission> deletePermission(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePermission(@PathVariable Long id) {
         permissionService.deletePermission(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    public ResponseEntity<Permission> updatePermission(@RequestBody Permission permission) {
-        return ResponseEntity.ok(permissionService.updatePermission(permission));
+    public ResponseEntity<PermissionDTO> updatePermission(@RequestBody PermissionDTO permissionDTO) {
+        return ResponseEntity.ok(permissionService.updatePermission(permissionDTO));
     }
 
 

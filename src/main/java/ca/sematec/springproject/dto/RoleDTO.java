@@ -1,22 +1,22 @@
 package ca.sematec.springproject.dto;
 
 public class RoleDTO {
-    private int id;
+    private Long id;
     private String name;
 
     public RoleDTO() {
     }
 
-    public RoleDTO(int id, String name) {
+    public RoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

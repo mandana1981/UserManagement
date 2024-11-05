@@ -1,7 +1,10 @@
 package ca.sematec.springproject.service;
 
+import ca.sematec.springproject.dto.RoleDTO;
+import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.Role;
 import ca.sematec.springproject.entity.User;
+import ca.sematec.springproject.mapper.RoleMapper;
 import ca.sematec.springproject.repository.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,34 +17,41 @@ import java.util.Optional;
 public class RoleService {
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    RoleMapper roleMapper;
 
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+    public List<RoleDTO> getAllRoles() {
+        return roleMapper.rolesToRoleDTOs(roleRepository.findAll());
     }
 
-    public Role getRoleById(Long id) {
+    public RoleDTO getRoleById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent()) {
-            return role.get();
+
+            return roleMapper.roleToRoleDTO(role.get());
+
         } else {
             throw new EntityNotFoundException("Role not found!");
 
         }
     }
 
-    public Role addRole(Role role) {
-        return roleRepository.save(role);
+    public RoleDTO addRole(RoleDTO roleDTO) {
+        Role role=roleMapper.roleDTOToRole(roleDTO);
+        roleRepository.save(role);
+        return (roleDTO);
     }
 
     public void deleteRole(Long id) {
-        Role role = getRoleById(id);
+        Role role = roleMapper.roleDTOToRole(getRoleById(id));
        roleRepository.delete(role);
     }
 
-    public Role updateRole(Role role) {
-        Role roleToUpdate = getRoleById(role.getId());
-        roleToUpdate.setName(role.getName());
-        return roleRepository.save(roleToUpdate);
+    public RoleDTO updateRole(RoleDTO roleDTO) {
+        RoleDTO roleDTOToUpdate = getRoleById(roleDTO.getId());
+        roleDTOToUpdate.setName(roleDTO.getName());
+        Role updatedRole=roleMapper.roleDTOToRole(roleDTOToUpdate);
+        return roleDTOToUpdate;
     }
 
 }

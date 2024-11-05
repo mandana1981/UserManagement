@@ -5,6 +5,7 @@ import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.UserMapper;
 import ca.sematec.springproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,12 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
     UserMapper userMapper;
 
 
-    public List<User> getAllUsers() {
-
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return userMapper.usersToUserDTOs(userRepository.findAll());
     }
 
     public UserDTO getUserById(Long id) {
@@ -38,22 +39,25 @@ public class UserService {
         }
     }
 
-    public User addUser(User user) {
-
-        return userRepository.save(user);
+    public UserDTO addUser(UserDTO userDTO) {
+      User user=userMapper.userDTOToUser(userDTO);
+        userRepository.save(user);
+        return userDTO;
     }
 
-//    public void deleteUser(Long id) {
-//        User user = getUserById(id);
-//        userRepository.delete(user);
-//    }
+    public void deleteUser(Long id) {
+        User user=userMapper.userDTOToUser(getUserById(id));
+        userRepository.delete(user);
+    }
 
-//    public User updateUser(User user) {
-//        User userToUpdate = getUserById(user.getId());
-//        userToUpdate.setUsername(user.getUsername());
-//        return userRepository.save(userToUpdate);
-//
-//    }
+    public UserDTO updateUser(UserDTO userDTO) {
+        UserDTO userDTOToUpdate=getUserById(userDTO.getId());
+        userDTOToUpdate.setUsername(userDTO.getUsername());
+        User updatedUser=userMapper.userDTOToUser(userDTOToUpdate);
+        userRepository.save(updatedUser);
+        return userDTOToUpdate;
+
+    }
 
 
 }

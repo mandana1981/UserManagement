@@ -1,6 +1,10 @@
 package ca.sematec.springproject.service;
 
+import ca.sematec.springproject.dto.PermissionDTO;
+import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.Permission;
+import ca.sematec.springproject.entity.User;
+import ca.sematec.springproject.mapper.PermissionMapper;
 import ca.sematec.springproject.repository.PermissionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,32 +17,40 @@ import java.util.Optional;
 public class PermissionService {
     @Autowired
     PermissionRepository permissionRepository;
+    @Autowired
+    PermissionMapper permissionMapper;
 
-    public List<Permission> getAllPermissions() {
-        return permissionRepository.findAll();
+
+    public List<PermissionDTO> getAllPermissions() {
+
+        return permissionMapper.permissionsToPermissionDTOs(permissionRepository.findAll());
     }
-
-    public Permission getPermissionById(Long id) {
+    public PermissionDTO getPermissionById(Long id) {
         Optional<Permission> permission = permissionRepository.findById(id);
         if (permission.isPresent()) {
-            return permission.get();
+            return permissionMapper.permissionToPermissionDTO(permission.get());
         }else {
             throw new EntityNotFoundException("Permission not found");
         }
     }
-    public Permission addPermission(Permission permission) {
-        return permissionRepository.save(permission);
-    }
 
+    public PermissionDTO addPermission(PermissionDTO permissionDTO) {
+        Permission permission=permissionMapper.permissionDTOToPermission(permissionDTO);
+        permissionRepository.save(permission);
+        return permissionDTO;
+    }
     public void deletePermission(Long id) {
-        Permission permission=getPermissionById(id);
+        Permission permission=permissionMapper.permissionDTOToPermission(getPermissionById(id));
         permissionRepository.delete(permission);
     }
 
-    public Permission updatePermission(Permission permission) {
-        Permission permissionToUpdate = getPermissionById(permission.getId());
-        permissionToUpdate.setName(permission.getName());
-        return permissionRepository.save(permissionToUpdate);
+
+    public PermissionDTO updatePermission(PermissionDTO permissionDTO) {
+        PermissionDTO permissionDTOToUpdate = getPermissionById(permissionDTO.getId());
+        permissionDTOToUpdate.setName(permissionDTO.getName());
+        Permission updatedPermission=permissionMapper.permissionDTOToPermission(permissionDTOToUpdate);
+         permissionRepository.save(updatedPermission);
+         return permissionDTOToUpdate;
     }
 
 

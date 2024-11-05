@@ -1,13 +1,13 @@
 package ca.sematec.springproject.dto;
 
 public class PermissionDTO {
-    private int id;
+    private Long id;
     private String name;
 
     public PermissionDTO() {
     }
 
-    public PermissionDTO(int id, String name) {
+    public PermissionDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -20,11 +20,11 @@ public class PermissionDTO {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

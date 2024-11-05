@@ -6,7 +6,6 @@ import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

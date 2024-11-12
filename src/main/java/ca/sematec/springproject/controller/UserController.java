@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "USERS", description = "User Api")
+
 @RestController
-@RequestMapping("/users")
+
 public class UserController {
     @Autowired
     UserService userService;

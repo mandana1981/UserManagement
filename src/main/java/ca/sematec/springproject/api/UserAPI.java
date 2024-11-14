@@ -35,7 +35,7 @@ public interface UserAPI {
                     (mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)})
     @GetMapping("/{id}")
-    ResponseEntity<UserDTO> getUserById(@Validated @PathVariable(name = "id") long userId);
+    ResponseEntity<UserDTO> getUserById(@Validated @PathVariable("id") Long id);
 
     //////////
 @Operation(summary = "create new User")

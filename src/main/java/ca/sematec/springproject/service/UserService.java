@@ -20,8 +20,8 @@ public class UserService {
     UserMapper userMapper;
 
 
-    public List<UserDTO> getAllUsers() {
-        return userMapper.usersToUserDTOs(userRepository.findAll());
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public UserDTO getUserById(Long id) {
@@ -39,10 +39,10 @@ public class UserService {
         }
     }
 
-    public UserDTO addUser(UserDTO userDTO) {
-      User user=userMapper.userDTOToUser(userDTO);
+    public User addUser(User user) {
+
         userRepository.save(user);
-        return userDTO;
+        return user;
     }
 
     public void deleteUser(Long id) {

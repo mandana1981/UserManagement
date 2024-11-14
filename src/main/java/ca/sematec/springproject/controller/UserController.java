@@ -1,10 +1,11 @@
 package ca.sematec.springproject.controller;
 
+import ca.sematec.springproject.api.UserAPI;
 import ca.sematec.springproject.dto.UserDTO;
+import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,41 +13,37 @@ import java.util.List;
 
 
 @RestController
-
-public class UserController {
+public class UserController implements UserAPI {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @GetMapping
-    @Operation(summary = "Returns a list of all users")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> userDTOs = userService.getAllUsers();
-        return ResponseEntity.ok(userDTOs);
+
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<UserDTO> getUserById( Long id) {
 
         UserDTO userDTO = userService.getUserById(id);
 
         return ResponseEntity.ok(userDTO);
     }
 
-    @PostMapping
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.addUser(userDTO));
+    @Override
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        return new ResponseEntity<User>(userService.addUser(user), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
 
-    @PutMapping
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.updateUser(userDTO));
+    @Override
+    public void updateUser(Long id,UserDTO userDTO) {
     }
 
 

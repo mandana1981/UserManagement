@@ -35,14 +35,13 @@ public interface UserAPI {
                     (mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)})
     @GetMapping("/{id}")
-    ResponseEntity<UserDTO> getUserById(@Validated @PathVariable("id") Long id);
+    ResponseEntity<UserDTO> getUserById(@Validated @PathVariable  Long id);
 
     //////////
-@Operation(summary = "create new User")
-@ApiResponses(value = {
-        @ApiResponse(responseCode = "201",description = "Created",
-        content = {@Content(mediaType = "application/json",
-        schema = @Schema(implementation = User.class))}),
+        @Operation(summary = "create new User")
+        @ApiResponses(value = {
+        @ApiResponse(responseCode = "201",description = "Created", content =
+                {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))}),
         @ApiResponse(responseCode = "400",description = "Invalid input"),
         @ApiResponse(responseCode = "409",description = "This user already exists")})
 
@@ -50,15 +49,21 @@ public interface UserAPI {
     ResponseEntity<User> addUser(@Validated @RequestBody User user);
 
     //////////
-    @Operation(summary = "Update a User")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204",description = "OK",
-            content = @Content),
+        @Operation(summary = "Update a User")
+        @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",description = "OK", content = @Content),
             @ApiResponse(responseCode = "404",description = "Not found",content = @Content)})
     @PostMapping("/{id}")
     void updateUser(@PathVariable("id") Long id, @Validated @RequestBody UserDTO userDTO);
 
     //////////
+        @Operation(summary = "Delete a User")
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "204",description = "OK",content = @Content),
+                @ApiResponse(responseCode = "404",description = "Not found",content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    void deleteUser(@Validated @PathVariable("id") Long id);
 
 
 

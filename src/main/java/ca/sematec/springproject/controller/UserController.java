@@ -46,5 +46,10 @@ public class UserController implements UserAPI {
     public void updateUser(Long id,UserDTO userDTO) {
     }
 
+    @Override
+    public void deleteUser(Long id) {
+
+    }
+
 
 }

@@ -36,18 +36,15 @@ public class UserController implements UserAPI {
         return new ResponseEntity<User>(userService.addUser(user), HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
-
 
     @Override
     public void updateUser(Long id,UserDTO userDTO) {
+        userService.updateUser(userDTO);
     }
 
     @Override
     public void deleteUser(Long id) {
+        userService.deleteUser();
 
     }
 

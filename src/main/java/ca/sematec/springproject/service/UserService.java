@@ -39,14 +39,14 @@ public class UserService {
         }
     }
 
-    public User addUser(User user) {
-
+    public User addUser(UserDTO userDTO) {
+        User user=userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
         return user;
     }
 
     public void deleteUser(Long id) {
-        User user=getUserById(id);
+        User user=userMapper.userDTOToUser(getUserById(id));
         userRepository.delete(user);
     }
 

@@ -5,7 +5,6 @@ import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.UserMapper;
 import ca.sematec.springproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,35 +24,47 @@ public class UserService {
     }
 
     public UserDTO getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
+        User user = getUser(id);
+        //Optional.of(user).map(user->userMapper.userToUserDTO(user));
 
-        if (user.isPresent()) {
+       return userMapper.userToUserDTO(user);
 
+//        return userRepository.findById(id).map(user -> userMapper.userToUserDTO(user))
+//                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
 
-             return userMapper.userToUserDTO(user.get());
-
-
-        } else {
-            throw new EntityNotFoundException("User not found!");
-
-        }
+//        if (user.isPresent()) {
+//
+//
+//             return userMapper.userToUserDTO(user.get());
+//
+//
+//        } else {
+//            throw new EntityNotFoundException("User not found!");
+//
+//        }
     }
 
     public User addUser(UserDTO userDTO) {
-        User user=userMapper.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
         return user;
     }
 
     public void deleteUser(Long id) {
-        User user=userMapper.userDTOToUser(getUserById(id));
+        User user = getUser(id);
         userRepository.delete(user);
+
+
+    }
+
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found!"));
     }
 
     public UserDTO updateUser(UserDTO userDTO) {
-        UserDTO userDTOToUpdate=getUserById(userDTO.getId());
+        UserDTO userDTOToUpdate = getUserById(userDTO.getId());
         userDTOToUpdate.setUsername(userDTO.getUsername());
-        User updatedUser=userMapper.userDTOToUser(userDTOToUpdate);
+        User updatedUser = userMapper.userDTOToUser(userDTOToUpdate);
         userRepository.save(updatedUser);
         return userDTOToUpdate;
 

@@ -4,27 +4,27 @@ import ca.sematec.springproject.api.UserAPI;
 import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @RestController
 public class UserController implements UserAPI {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
 
 
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> userDTOS = userService.getAllUsers();
+        return ResponseEntity.ok(userDTOS);
     }
 
     @Override
-    public ResponseEntity<UserDTO> getUserById( Long id) {
+    public ResponseEntity<UserDTO> getUserById(Long id) {
 
         UserDTO userDTO = userService.getUserById(id);
 
@@ -38,7 +38,7 @@ public class UserController implements UserAPI {
 
 
     @Override
-    public void updateUser(Long id,UserDTO userDTO) {
+    public void updateUser(Long id, UserDTO userDTO) {
         userService.updateUser(userDTO);
     }
 

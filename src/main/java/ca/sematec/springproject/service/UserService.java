@@ -5,43 +5,29 @@ import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.UserMapper;
 import ca.sematec.springproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    UserMapper userMapper;
 
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    // intermediate , terminal
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::userToUserDTO).toList();
     }
 
     public UserDTO getUserById(Long id) {
         User user = getUser(id);
-        //Optional.of(user).map(user->userMapper.userToUserDTO(user));
-
-       return userMapper.userToUserDTO(user);
-
-//        return userRepository.findById(id).map(user -> userMapper.userToUserDTO(user))
-//                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
-
-//        if (user.isPresent()) {
-//
-//
-//             return userMapper.userToUserDTO(user.get());
-//
-//
-//        } else {
-//            throw new EntityNotFoundException("User not found!");
-//
-//        }
+        return userMapper.userToUserDTO(user);
     }
 
     public User addUser(UserDTO userDTO) {

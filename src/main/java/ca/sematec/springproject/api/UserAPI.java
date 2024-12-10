@@ -25,7 +25,7 @@ public interface UserAPI {
                             schema = @Schema(implementation = User.class)))}),
     })
     @GetMapping()
-    ResponseEntity<List<User>> getAllUsers();
+    ResponseEntity<List<UserDTO>> getAllUsers();
 
     //////////
 

@@ -24,8 +24,9 @@ public class User {
     @Column(name = "USER_PASSWORD")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<Role> roles = new ArrayList<Role>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL ,orphanRemoval = true)
+    List<Role> roles = new ArrayList<>();
 
 }
 

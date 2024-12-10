@@ -1,16 +1,12 @@
 package ca.sematec.springproject.controller;
 
 import ca.sematec.springproject.dto.PermissionDTO;
-import ca.sematec.springproject.dto.UserDTO;
-import ca.sematec.springproject.entity.Permission;
 import ca.sematec.springproject.service.PermissionService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/permissions")

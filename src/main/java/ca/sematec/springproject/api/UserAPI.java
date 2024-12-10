@@ -1,6 +1,6 @@
 package ca.sematec.springproject.api;
 
-import ca.sematec.springproject.dto.UserDTO;
+import ca.sematec.springproject.dto.UserRequest;
 import ca.sematec.springproject.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -25,28 +25,39 @@ public interface UserAPI {
                             schema = @Schema(implementation = User.class)))}),
     })
     @GetMapping()
-    ResponseEntity<List<UserDTO>> getAllUsers();
+    ResponseEntity<List<UserRequest>> getAllUsers();
 
     //////////
 
     @Operation(summary = "Find user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content
-                    (mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))}),
+                    (mediaType = "application/json", schema = @Schema(implementation = UserRequest.class))}),
             @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)})
     @GetMapping("/{id}")
-    ResponseEntity<UserDTO> getUserById(@Validated @PathVariable  Long id);
+    ResponseEntity<UserRequest> getUserById(@Validated @PathVariable  Long id);
 
     //////////
-        @Operation(summary = "create new User")
-        @ApiResponses(value = {
-        @ApiResponse(responseCode = "201",description = "Created", content =
-                {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))}),
-        @ApiResponse(responseCode = "400",description = "Invalid input"),
-        @ApiResponse(responseCode = "409",description = "This user already exists")})
+//        @Operation(summary = "create new User")
+//        @ApiResponses(value = {
+//        @ApiResponse(responseCode = "201",description = "Created", content =
+//                {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))}),
+//        @ApiResponse(responseCode = "400",description = "Invalid input"),
+//        @ApiResponse(responseCode = "409",description = "This user already exists")})
+//
+//    @PostMapping
+//    ResponseEntity<User> addUser(@Validated @RequestBody User user);
+
+
+    @Operation(summary = "create new User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",description = "Created", content =
+                    {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))}),
+            @ApiResponse(responseCode = "400",description = "Invalid input"),
+            @ApiResponse(responseCode = "409",description = "This user already exists")})
 
     @PostMapping
-    ResponseEntity<User> addUser(@Validated @RequestBody User user);
+    ResponseEntity<UserRequest> addUser(@RequestBody UserRequest user);
 
     //////////
         @Operation(summary = "Update a User")
@@ -54,7 +65,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "204",description = "OK", content = @Content),
             @ApiResponse(responseCode = "404",description = "Not found",content = @Content)})
     @PostMapping("/{id}")
-    void updateUser(@PathVariable("id") Long id, @Validated @RequestBody UserDTO userDTO);
+    void updateUser(@PathVariable("id") Long id, @Validated @RequestBody UserRequest userDTO);
 
     //////////
         @Operation(summary = "Delete a User")

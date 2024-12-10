@@ -1,9 +1,7 @@
 package ca.sematec.springproject.service;
 
 import ca.sematec.springproject.dto.RoleDTO;
-import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.Role;
-import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.RoleMapper;
 import ca.sematec.springproject.repository.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;

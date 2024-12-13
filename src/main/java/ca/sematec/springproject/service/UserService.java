@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,13 +24,17 @@ public class UserService {
 
     public UserDTO getUserById(Long id) {
         User user = getUser(id);
+
+
         //Optional.of(user).map(user->userMapper.userToUserDTO(user));
 
-       return userMapper.userToUserDTO(user);
+        return userMapper.userToUserDTO(user);
 
-//        return userRepository.findById(id).map(user -> userMapper.userToUserDTO(user))
+        // return userRepository.findById(id).map(user -> userMapper.userToUserDTO(user))
 //                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
 
+
+        // Optional<User> user=userRepository.findById(id);
 //        if (user.isPresent()) {
 //
 //

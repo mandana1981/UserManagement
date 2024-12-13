@@ -20,7 +20,7 @@ public class UserService {
 
 
     public List<UserDTO> getAllUsers() {
-        return userRepository.findAll();
+       return userRepository.findAll().stream().map(userMapper::userToUserDTO).toList();
     }
 
     public UserDTO getUserById(Long id) {

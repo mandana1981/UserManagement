@@ -5,20 +5,21 @@ import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.UserMapper;
 import ca.sematec.springproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    UserMapper userMapper;
+
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
 
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll();
     }
 

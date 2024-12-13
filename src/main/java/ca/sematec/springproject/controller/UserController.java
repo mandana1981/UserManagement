@@ -3,6 +3,7 @@ package ca.sematec.springproject.controller;
 import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,9 @@ public class UserController {
     }
 
 
-    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
-        return new ResponseEntity<User>(userService.addUser(userDTO), HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserDTO userDTO) {
+        UserDTO userDTOCreated=userService.addUser(userDTO);
+        return new ResponseEntity<>(userDTOCreated, HttpStatus.CREATED);
     }
 
 

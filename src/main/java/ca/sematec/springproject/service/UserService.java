@@ -48,10 +48,14 @@ public class UserService {
 //        }
     }
 
-    public User addUser(UserDTO userDTO) {
+    public UserDTO addUser(UserDTO userDTO) {
         User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
-        return user;
+        return userDTO;
+        //if we wanted to do some changes on user and then save it,like while selling a ticket ,add a status
+        // to it like pending and send it to the front end:
+        //User userCreated = userRepository.save(user);
+        //return userMapper.userToUserDTO(userCreated);
     }
 
     public void deleteUser(Long id) {

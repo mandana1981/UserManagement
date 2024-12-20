@@ -1,12 +1,11 @@
 package ca.sematec.springproject.service;
 
-import ca.sematec.springproject.dto.UserDTO;
+import ca.sematec.springproject.dto.UserRequest;
 import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.UserMapper;
 import ca.sematec.springproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +18,11 @@ public class UserService {
     private final UserMapper userMapper;
 
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserRequest> getAllUsers() {
        return userRepository.findAll().stream().map(userMapper::userToUserDTO).toList();
     }
 
-    public UserDTO getUserById(Long id) {
+    public UserRequest getUserById(Long id) {
         User user = getUser(id);
 
 
@@ -48,7 +47,7 @@ public class UserService {
 //        }
     }
 
-    public UserDTO addUser(UserDTO userDTO) {
+    public UserRequest addUser(UserRequest userDTO) {
         User user = userMapper.userDTOToUser(userDTO);
         userRepository.save(user);
         return userDTO;
@@ -65,17 +64,18 @@ public class UserService {
 
     }
 
-    private User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found!"));
+
+
+    public void updateUser(Long id, UserRequest userDTO) {
+        User user = getUser(id);
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        userRepository.save(user);
     }
 
-    public UserDTO updateUser(UserDTO userDTO) {
-        UserDTO userDTOToUpdate = getUserById(userDTO.getId());
-        userDTOToUpdate.setUsername(userDTO.getUsername());
-        User updatedUser = userMapper.userDTOToUser(userDTOToUpdate);
-        userRepository.save(updatedUser);
-        return userDTOToUpdate;
 
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found!"));
     }
 
 

@@ -6,15 +6,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-
-    @NotNull
-    private Long id;
+public sealed class UserRequest permits UserResponse {
 
     @NotNull
     @NotBlank(message = "username can not be blank")

@@ -1,16 +1,12 @@
 package ca.sematec.springproject.controller;
 
 import ca.sematec.springproject.dto.RoleDTO;
-import ca.sematec.springproject.dto.UserDTO;
-import ca.sematec.springproject.entity.Role;
-import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/roles")

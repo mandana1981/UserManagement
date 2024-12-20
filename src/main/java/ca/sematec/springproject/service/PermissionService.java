@@ -1,9 +1,7 @@
 package ca.sematec.springproject.service;
 
 import ca.sematec.springproject.dto.PermissionDTO;
-import ca.sematec.springproject.dto.UserDTO;
 import ca.sematec.springproject.entity.Permission;
-import ca.sematec.springproject.entity.User;
 import ca.sematec.springproject.mapper.PermissionMapper;
 import ca.sematec.springproject.repository.PermissionRepository;
 import jakarta.persistence.EntityNotFoundException;
